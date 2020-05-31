@@ -1,4 +1,5 @@
 require('shelljs/global');
+const fs = require('fs');
 
 exports.replaceWebpack = () => {
   const replaceTasks = [{
@@ -13,9 +14,9 @@ exports.replaceWebpack = () => {
 };
 
 exports.copyAssets = (type) => {
-  const env = type === 'build' ? 'prod' : type;
+  const env = type === 'build/chrome_extension' ? 'prod' : 'dev';
   rm('-rf', type);
-  mkdir(type);
+  fs.mkdirSync(type, { recursive: true });
   cp(`chrome/manifest.${env}.json`, `${type}/manifest.json`);
   cp('-R', 'chrome/assets/*', type);
   exec(`pug -O "{ env: '${env}' }" -o ${type} chrome/views/`);

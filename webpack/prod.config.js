@@ -1,29 +1,26 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const customPath = path.join(__dirname, './customPublicPath');
 
 module.exports = {
   entry: {
     todoapp: [customPath, path.join(__dirname, '../chrome/extension/todoapp')],
-    background: [customPath, path.join(__dirname, '../chrome/extension/background')],
-    inject: [customPath, path.join(__dirname, '../chrome/extension/inject')]
+    background: [customPath, path.join(__dirname, '../chrome/extension/background')]
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin({})],
   },
   output: {
-    path: path.join(__dirname, '../build/js'),
+    path: path.join(__dirname, '../build/chrome_extension/js'),
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js'
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
+    // new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.IgnorePlugin(/[^/]+\/[\S]+.dev$/),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compressor: {
-        warnings: false
-      }
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')
@@ -31,7 +28,7 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['*', '.js']
+    extensions: ['*', '.js', '.ts', '.tsx']
   },
   module: {
     rules: [{
@@ -53,6 +50,10 @@ module.exports = {
           }
         }
       ]
+    }, {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
     }]
   }
 };

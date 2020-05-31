@@ -8,9 +8,9 @@
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "img/icon-16.png",
-    "48": "img/icon-48.png",
-    "128": "img/icon-128.png"
+    "16": "img/logo-small.png",
+    "48": "img/logo-small.png",
+    "128": "img/logo-small.png"
   },
   "web_accessible_resources": [
     "inject.html"
@@ -18,6 +18,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "contextMenus", "management", "tabs", "storage", "https://github.com/*" ],
-  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+  "permissions": [ "contextMenus", "management", "tabs", "storage", "http://*/*", "http://localhost/*", "http://localhost:4000/", "http://localhost/", "http://localhost:4000/*", "https://*/*", "file://*/*", "<all_urls>" ],
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:4000 http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }

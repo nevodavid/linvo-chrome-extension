@@ -4,6 +4,7 @@
   },
   "rules": {
     "no-console": 0,
+    "max-len": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }

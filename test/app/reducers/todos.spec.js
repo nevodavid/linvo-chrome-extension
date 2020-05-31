@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as types from '../../../app/constants/ActionTypes';
-import todos from '../../../app/reducers/todos';
+import todos from '../../../app/store/reducers/user';
 
 describe('todoapp todos reducer', () => {
   it('should handle initial state', () => {
