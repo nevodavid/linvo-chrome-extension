@@ -21,6 +21,8 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.IgnorePlugin(/[^/]+\/[\S]+.dev$/),
     new webpack.DefinePlugin({
+      __HOST__: "'api.linvo.io'",
+      __PORT__: 0,
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }

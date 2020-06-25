@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import { config } from '../config';
+axios.defaults.baseURL = config.apiUrl;
 export interface Event {
     _id: string;
     id: string;
@@ -26,10 +27,14 @@ export interface EventsResponse {
 export class EventsService {
   static async getAll(): Promise<EventsResponse[]> {
       // @ts-ignore
-    return (await axios.get(`http://localhost:4000/interactions/${window.linvoApiKey}`)).data;
+    return (await axios.get(`/interactions/${window.linvoApiKey}`)).data;
   }
 
-  static async getWidget(id: string): Promise<{title: string, text: string}> {
-    return (await axios.get(`http://localhost:4000/interactions/${id}/widget`)).data;
+  static async getWidget(id: string): Promise<{title: string, text: string, type: 'pixel' | 'popup'}> {
+    return (await axios.get(`/interactions/${id}/widget`)).data;
+  }
+
+  static async widgetClicked(id: string, video: string) {
+    return (await axios.post(`/interactions/${id}/clicked`, { video })).data;
   }
 }

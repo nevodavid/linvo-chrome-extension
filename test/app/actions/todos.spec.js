@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as types from '../../../app/constants/ActionTypes';
-import * as actions from '../../../app/store/actions/todos';
+import * as types from '../../../chrome_extension/app/constants/ActionTypes';
+import * as actions from '../../../chrome_extension/app/store/actions/todos';
 
 describe('todoapp todo actions', () => {
   it('addTodo should create ADD_TODO action', () => {

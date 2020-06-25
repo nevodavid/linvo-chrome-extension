@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import smartlookClient from 'smartlook-client';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
 import styled, { keyframes, StyleSheetManager } from 'styled-components';
+import { EventsService } from '../../services/events.service';
 
 const fadeInPopup = keyframes`
  0% { opacity: 0;}
@@ -49,7 +51,9 @@ const PopupContainer = styled.div`
 `;
 
 interface PopupComponentProps {
+    id: string;
     text: string;
+    title: string;
     close?: () => void;
 }
 
@@ -58,6 +62,16 @@ class PopupComponent extends Component<PopupComponentProps> {
     event.preventDefault();
     event.stopPropagation();
   };
+
+  isClicked = false;
+
+  click = () => {
+    const { id } = this.props;
+    if (!this.isClicked) {
+      this.isClicked = true;
+      EventsService.widgetClicked(id, localStorage.getItem('video'));
+    }
+  }
 
   render() {
     const { text, close } = this.props;
@@ -68,7 +82,7 @@ class PopupComponent extends Component<PopupComponentProps> {
             {
                             frameContext => (
                               <StyleSheetManager target={frameContext.document.head}>
-                                <PopupContainer dangerouslySetInnerHTML={{ __html: text }} />
+                                <PopupContainer onClick={this.click} dangerouslySetInnerHTML={{ __html: text }} />
                               </StyleSheetManager>
                             )
                         }

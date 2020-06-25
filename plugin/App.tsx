@@ -1,10 +1,38 @@
 import React from 'react';
 import {EventsResponse, EventsService} from "./services/events.service";
 import PopupComponent from "./components/popup/popup.component";
+import FacebookPixelComponent from "./components/pixel/facebook.pixel.component";
+import { v1 as uuidv1 } from 'uuid';
+import smartlookClient from 'smartlook-client'
 
 interface AppState {
   components: React.ReactElement[];
 }
+
+function live(elementId: string, cb: () => void) {
+  document.addEventListener('click', function (event) {
+    // @ts-ignore
+    if (event.target && event.target.id === elementId) {
+      cb.call(event.target, event);
+    }
+  });
+}
+
+const userId = localStorage.getItem('userId') || (() => {
+  const id = uuidv1();
+  localStorage.setItem('userId', id);
+  return id;
+})();
+
+if (window.location.hostname.indexOf('lublinsky.co.il') > -1) {
+  smartlookClient.init('e6a5828f61e5b85ffe4f69c048dd9b0a900448e0');
+  // @ts-ignore
+  window.smartlook(() => {
+    // @ts-ignore
+    localStorage.setItem('video', btoa(window.smartlook.playUrl))
+  });
+}
+
 class App extends React.Component<{}, AppState> {
   state: AppState = {
     components: []
@@ -12,7 +40,11 @@ class App extends React.Component<{}, AppState> {
 
   eventsToBeExecuted: any[] = JSON.parse(localStorage.getItem('eventsToBeExecuted') || '[]');
 
-  componentDidMount() {
+  componentDidMount(): void {
+      this.checkPageLoaded();
+  }
+
+  checkPageLoaded() {
     this.eventsToBeExecuted.map((id) => {
       this.trigger(id);
     });
@@ -48,10 +80,10 @@ class App extends React.Component<{}, AppState> {
 
     const widget = await EventsService.getWidget(id);
 
-    const Popup = <PopupComponent text={widget.text} />;
+    const Component = widget.type === 'popup' ? <PopupComponent id={id} title={widget.title} text={widget.text} /> : <FacebookPixelComponent name={widget.title} id={widget.text} />;
 
-    components.push(React.cloneElement(Popup, {
-      close: this.removeComponent(Popup)
+    components.push(React.cloneElement(Component, {
+      close: this.removeComponent(Component)
     }));
 
     this.setState({
@@ -59,42 +91,47 @@ class App extends React.Component<{}, AppState> {
     });
   }
 
+  saveCallbacks = [] as any[];
+
   loadEvents = async (onFoundEvent: (event: EventsResponse) => void) => {
     const events = await EventsService.getAll();
-    return events.map((currentEvent) => {
-      const selectors: any[] = currentEvent.events.reduce((all, event) => {
-        const select = document.querySelectorAll(event.match);
-        if (!select) {
-          return all;
-        }
 
-        return [
+    document.addEventListener('mousedown', (eventin) => {
+      events.map((currentEvent) => {
+        const selectors: any[] = currentEvent.events.reduce((all, event) => {
+          const select = document.querySelectorAll(event.match);
+          if (!select) {
+            return all;
+          }
+
+          return [
             ...all,
             Array.from(select)
-        ];
-      }, [] as any[]);
+          ];
+        }, [] as any[]);
 
-      const possibleKey = localStorage.getItem(`event-${currentEvent.id}`);
-      let found = possibleKey ? Number(possibleKey) : -1;
+        const possibleKey = localStorage.getItem(`event-${currentEvent.id}`);
+        let found = possibleKey ? Number(possibleKey) : -1;
 
-      return selectors.map((currentSelect, index) => {
-        currentSelect.map((eventor: any) => {
-          return eventor.addEventListener('click', () => {
-            if (found + 1 === index) {
-              localStorage.setItem(`event-${currentEvent.id}`, String(index));
-              found = index;
-            }
-            else {
-              return ;
-            }
+        return selectors.map((currentSelect, index) => {
+          currentSelect.map((eventor: any) => {
+              if (eventor.contains(eventin.target)) {
+                console.log('found event');
+                if (found + 1 === index) {
+                  localStorage.setItem(`event-${currentEvent.id}`, String(index));
+                  found = index;
+                } else {
+                  return;
+                }
 
-            if (selectors.length - 1 === index) {
-              found = -1;
-              localStorage.removeItem(`event-${currentEvent.id}`);
-              onFoundEvent(currentEvent);
-            }
+                if (selectors.length - 1 === index) {
+                  found = -1;
+                  localStorage.removeItem(`event-${currentEvent.id}`);
+                  onFoundEvent(currentEvent);
+                }
+              }
           });
-        })
+        });
       });
     });
   }

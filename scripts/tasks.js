@@ -17,7 +17,7 @@ exports.copyAssets = (type) => {
   const env = type === 'build/chrome_extension' ? 'prod' : 'dev';
   rm('-rf', type);
   fs.mkdirSync(type, { recursive: true });
-  cp(`chrome/manifest.${env}.json`, `${type}/manifest.json`);
-  cp('-R', 'chrome/assets/*', type);
-  exec(`pug -O "{ env: '${env}' }" -o ${type} chrome/views/`);
+  cp(`chrome_extension/chrome/manifest.${env}.json`, `${type}/manifest.json`);
+  cp('-R', 'chrome_extension/chrome/assets/*', type);
+  exec(`pug -O "{ env: '${env}' }" -o ${type} chrome_extension/chrome/views/`);
 };

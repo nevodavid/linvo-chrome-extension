@@ -7,8 +7,9 @@ const customPath = path.join(__dirname, './customPublicPath');
 
 module.exports = {
   entry: {
-    todoapp: [customPath, path.join(__dirname, '../chrome/extension/todoapp')],
-    background: [customPath, path.join(__dirname, '../chrome/extension/background')]
+    todoapp: [customPath, path.join(__dirname, '../chrome_extension/chrome/extension/todoapp')],
+    background: [customPath, path.join(__dirname, '../chrome_extension/chrome/extension/background')],
+    inject: [customPath, path.join(__dirname, '../chrome_extension/chrome/extension/inject')],
   },
   optimization: {
     minimizer: [new UglifyJsPlugin({})],

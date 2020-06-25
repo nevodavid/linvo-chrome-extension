@@ -1,0 +1,23 @@
+{
+  "version": "0.0.3",
+  "name": "Linvo.io - Time your marketing",
+  "manifest_version": 2,
+  "description": "Linvo.io - Time your marketing",
+  "browser_action": {
+    "default_title": "Linvo.io - Time your marketing",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/logo-small.png",
+    "48": "img/logo-small.png",
+    "128": "img/logo-small.png"
+  },
+  "web_accessible_resources": [
+    "inject.html"
+  ],
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [ "tabs", "storage", "activeTab", "file://*/*", "<all_urls>" ],
+  "content_security_policy": "default-src 'self'; script-src 'self' https://api.linvo.io 'unsafe-eval'; connect-src https://api.linvo.io; style-src * 'unsafe-inline' 'self' blob:; img-src https://api.linvo.io 'self' data:;"
+}

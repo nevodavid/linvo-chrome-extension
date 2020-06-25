@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import Header from '../../../app/components/Header';
-import TodoTextInput from '../../../app/components/TodoTextInput';
+import Header from '../../../chrome_extension/app/components/Header';
+import TodoTextInput from '../../../chrome_extension/app/components/TodoTextInput';
 
 function setup() {
   const props = {

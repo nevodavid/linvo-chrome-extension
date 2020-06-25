@@ -2,11 +2,11 @@ import path from 'path';
 import webdriver from 'selenium-webdriver';
 import { expect } from 'chai';
 import { delay, startChromeDriver, buildWebDriver } from '../func';
-import footerStyle from '../../app/components/Footer.css';
-import mainSectionStyle from '../../app/components/MainSection.css';
-import todoItemStyle from '../../app/components/TodoItem.css';
-import todoTextInputStyle from '../../app/components/TodoTextInput.css';
-import manifest from '../../chrome/manifest.prod.json';
+import footerStyle from '../../chrome_extension/app/components/Footer.css';
+import mainSectionStyle from '../../chrome_extension/app/components/MainSection.css';
+import todoItemStyle from '../../chrome_extension/app/components/TodoItem.css';
+import todoTextInputStyle from '../../chrome_extension/app/components/TodoTextInput.css';
+import manifest from '../../chrome_extension/chrome/manifest.prod.json';
 
 const extensionName = manifest.name;
 

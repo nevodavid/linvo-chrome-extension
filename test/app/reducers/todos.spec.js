@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as types from '../../../app/constants/ActionTypes';
-import todos from '../../../app/store/reducers/user';
+import * as types from '../../../chrome_extension/app/constants/ActionTypes';
+import todos from '../../../chrome_extension/app/store/reducers/user';
 
 describe('todoapp todos reducer', () => {
   it('should handle initial state', () => {
