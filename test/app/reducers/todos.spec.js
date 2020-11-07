@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as types from '../../../chrome_extension/app/constants/ActionTypes';
 import todos from '../../../chrome_extension/app/store/reducers/user';
 
-describe('todoapp todos reducer', () => {
+describe('app todos reducer', () => {
   it('should handle initial state', () => {
     expect(
       todos(undefined, {})

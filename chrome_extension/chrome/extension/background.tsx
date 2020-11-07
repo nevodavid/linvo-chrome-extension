@@ -26,13 +26,9 @@ function promisifyAll(obj, list) {
 promisifyAll(chrome, [
   'tabs',
   'windows',
-  'browserAction',
+  'browserAction'
 ]);
 
-
-promisifyAll(chrome.storage, [
-  'local',
-]);
 
 require('./background/inject');
 require('./background/badge');

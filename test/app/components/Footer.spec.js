@@ -33,7 +33,7 @@ function getTextContent(elem) {
   , '');
 }
 
-describe('todoapp Footer component', () => {
+describe('app Footer component', () => {
   it('should render correctly', () => {
     const { output } = setup();
     expect(output.type).to.equal('footer');

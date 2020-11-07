@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as types from '../../../chrome_extension/app/constants/ActionTypes';
 import * as actions from '../../../chrome_extension/app/store/actions/todos';
 
-describe('todoapp todo actions', () => {
+describe('app todo actions', () => {
   it('addTodo should create ADD_TODO action', () => {
     expect(actions.addTodo('Use Redux')).to.eql({
       type: types.ADD_TODO,

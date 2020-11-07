@@ -1,61 +1,31 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import $ from 'jquery';
-// @ts-ignore
-import Config from '../../app/components/config/config';
-import { ResetAll } from '../../app/components/events/event-tool/reset.all';
-import PageControl from '../../app/components/events/event-tool/page.control';
+import Background from '../../app/background/background';
+import { config } from '../../app/config/config';
+import store from '../../app/background/store/configure.store';
 
 class InjectApp extends Component {
   render() {
     return (
-      <PageControl />
+        // @ts-ignore
+      <Provider store={store}>
+        <Background />
+      </Provider>
     );
   }
 }
 
-const loadApp = () => {
+(() => {
   const injectDOM = document.createElement('div');
-  injectDOM.setAttribute('id', 'linvo-app');
-  injectDOM.className = 'linvo-app-class';
+  injectDOM.setAttribute('id', `linvo-app-${config.env}`);
+  injectDOM.className = `linvo-app-influ-${config.env}`;
   injectDOM.style.textAlign = 'center';
-  document.body.appendChild(injectDOM);
+  document.querySelector('html').appendChild(injectDOM);
 
-
-  chrome.storage.local.get('state', (obj) => {
-    const { state } = obj;
-    const initialState = JSON.parse(state || '{}');
-    const createStore = require('../../app/store/configureStore');
-
-    render(
-      <Provider store={createStore(initialState)}>
-        <ResetAll>
-          <InjectApp />
-          <Config />
-        </ResetAll>
-      </Provider>
-        ,
-        injectDOM
-    );
-  });
-};
-
-loadApp();
-
-// @ts-ignore
-window.connectToPlugin = (apiKey: string) => {
-  $('#api-key').val(apiKey);
-  const iframe = document.getElementsByTagName('iframe');
-  if (iframe) {
-    // @ts-ignore
-    iframe[0].contentWindow.postMessage(apiKey, '*');
-  }
-  $('input[type=submit]').trigger('click');
-};
-
-// @ts-ignore
-window.reloadStore = () => {
-  document.querySelector('#linvo-app').remove();
-  loadApp();
-};
+  render(
+    <InjectApp />
+      ,
+      injectDOM
+  );
+})();

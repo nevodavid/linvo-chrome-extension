@@ -30,12 +30,12 @@ describe('inject page (in github.com)', function test() {
     );
   });
 
-  it('should find `Open TodoApp` button', async () => {
+  it('should find `Open app` button', async () => {
     await driver.wait(
       () => driver.findElements(webdriver.By.css('.inject-react-example button'))
         .then(elems => elems.length > 0),
       10000,
-      'Inject app `Open TodoApp` button not found'
+      'Inject app `Open app` button not found'
     );
   });
 

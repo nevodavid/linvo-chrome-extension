@@ -17,7 +17,7 @@ function setup() {
   return { props, output, renderer };
 }
 
-describe('todoapp Header component', () => {
+describe('app Header component', () => {
   it('should render correctly', () => {
     const { output } = setup();
 

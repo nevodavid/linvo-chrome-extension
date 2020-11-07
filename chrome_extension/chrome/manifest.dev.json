@@ -1,16 +1,16 @@
 {
   "version": "0.0.0",
-  "name": "react-chrome-extension-example",
+  "name": "Linvo - Dev",
   "manifest_version": 2,
-  "description": "Example for react-chrome-extension-boilerplate",
+  "description": "This is a dev plugin",
   "browser_action": {
     "default_title": "React Chrome Extension Example",
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "img/logo-small.png",
-    "48": "img/logo-small.png",
-    "128": "img/logo-small.png"
+    "16": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
   },
   "web_accessible_resources": [
     "inject.html"
@@ -18,6 +18,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "tabs", "storage", "activeTab", "file://*/*", "<all_urls>" ],
-  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:4000 http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src http://localhost:4000 'self' data:;"
+  "permissions": [ "cookies", "tabs", "storage", "activeTab", "file://*/*", "https://www.linkedin.com/*", "http://localhost:3000/*" ],
+  "content_security_policy": "default-src 'self'; frame-src http://localhost:3000 ;script-src 'self' https://www.linkedin.com http://localhost:4000 https://localhost:3001 'unsafe-eval'; connect-src http://localhost:4000 http://localhost:3001; style-src * 'unsafe-inline' 'self' blob:; img-src http://localhost:3000  'self' data:;"
 }
