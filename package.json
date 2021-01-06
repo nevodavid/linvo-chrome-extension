@@ -109,7 +109,7 @@
     "@types/uuid": "^7.0.3",
     "@types/yup": "^0.28.3",
     "autoprefixer": "^7.2.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axios-chrome-messaging-adapter": "^0.4.0",
     "bluebird": "^3.3.4",
     "bootstrap": "^4.5.3",
